@@ -94,6 +94,9 @@ struct wcd9xxx_spmi_map {
 };
 
 struct wcd9xxx_spmi_map map;
+#ifdef CONFIG_MACH_WT88047
+static int late_resume;
+#endif
 
 void wcd9xxx_spmi_enable_irq(int irq)
 {
@@ -317,6 +320,12 @@ int wcd9xxx_spmi_resume(void)
 				map.pm_state,
 				map.wlock_holders);
 		map.pm_state = WCD9XXX_PM_SLEEPABLE;
+#ifdef CONFIG_MACH_WT88047
+		if (late_resume) {
+			msm8x16_wcd_restart_mbhc(map.codec);
+			late_resume = 0;
+		}
+#endif
 	} else {
 		pr_warn("%s: system is already awake, state %d wlock %d\n",
 				__func__, map.pm_state,
@@ -351,6 +360,9 @@ bool wcd9xxx_spmi_lock_sleep(void)
 			map.wlock_holders);
 	pr_debug("%s: map.pm_state = %d\n", __func__, map.pm_state);
 
+#ifdef CONFIG_MACH_WT88047
+	late_resume = 0;
+#endif
 	if (!wait_event_timeout(map.pm_wq,
 				((wcd9xxx_spmi_pm_cmpxchg(
 					WCD9XXX_PM_SLEEPABLE,
@@ -367,6 +379,9 @@ bool wcd9xxx_spmi_lock_sleep(void)
 			WCD9XXX_SYSTEM_RESUME_TIMEOUT_MS, map.pm_state,
 			map.wlock_holders);
 		wcd9xxx_spmi_unlock_sleep();
+#ifdef CONFIG_MACH_WT88047
+		late_resume = 1;
+#endif
 		return false;
 	}
 	wake_up_all(&map.pm_wq);
