@@ -347,6 +347,13 @@ dtb-$(CONFIG_ARCH_MSM8909) += msm8909-pm8916-mtp.dtb \
 	apq8009-ext-codec-dragon.dtb \
 	apq8009-dragon.dtb
 
+ifeq ($(CONFIG_MACH_WINGTECH_MSM8916),y)
+else ifeq ($(CONFIG_MACH_WT88047),y)
+dtb-$(CONFIG_ARCH_MSM8916) += msm8916-wt88047.dtb
+else
+#fml
+endif
+
 ifeq ($(CONFIG_ARM64),y)
 always          := $(dtb-y)
 subdir-y        := $(dts-dirs)
