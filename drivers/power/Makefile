@@ -64,8 +64,11 @@ obj-$(CONFIG_SMB1351_USB_CHARGER) += smb1351-charger.o
 obj-$(CONFIG_SMB350_CHARGER)   += smb350_charger.o
 obj-$(CONFIG_SMB135X_CHARGER)   += smb135x-charger.o
 obj-$(CONFIG_BQ2022A_SUPPORT)	+= bq2022a-batid.o
-obj-$(CONFIG_SMB1360_CHARGER_FG) += smb1360-charger-fg.o
+ifeq ($(CONFIG_MACH_WT88047),y)
+obj-$(CONFIG_SMB1360_CHARGER_FG) += smb1360-charger-fg-wt88047.o
+else
 obj-$(CONFIG_SMB138X_CHARGER)	+= smb138x-charger.o pmic-voter.o
+endif
 obj-$(CONFIG_SMB358_CHARGER)	+= smb358-charger.o
 obj-$(CONFIG_SMB23X_CHARGER)	+= smb23x-charger.o
 obj-$(CONFIG_BATTERY_BQ28400)	+= bq28400_battery.o

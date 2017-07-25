@@ -120,8 +120,20 @@ enum msm_usb_phy_type {
 	QUSB_ULPI_PHY,
 };
 
+/* CONFIG_MACH_WT88047 */
+#ifdef CONFIG_MACH_WT88047
+#define IDEV_CHG_MAX	1050
+#define IDEV_CHG_MIN	500
+#define IUNIT		100
+
+#define IDEV_ACA_CHG_MAX	1500
+#define IDEV_ACA_CHG_LIMIT	500
+
+#else
 #define IDEV_CHG_MAX	1500
 #define IUNIT		100
+
+#endif
 #define IDEV_HVDCP_CHG_MAX	1800
 
 /**
