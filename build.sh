@@ -27,7 +27,7 @@ yellow='\033[0;33m'
 red='\033[0;31m'
 nocol='\033[0m'
 # Modify the following variable if you want to build
-export CROSS_COMPILE="$HOME/android/kernels/toolchains/arm-lin-7/bin/arm-linux-gnueabi-"
+export CROSS_COMPILE="$HOME/.kernel/gcc-arm-8.2-2018.08-x86_64-arm-linux-gnueabi/bin/arm-linux-gnueabi-"
 export ARCH=arm
 export SUBARCH=arm
 make wt88047_defconfig
