@@ -3981,8 +3981,7 @@ disable_fg_reset:
 				pr_debug("battery capacity correct\n");
 			} else {
 				/* Update the battery capacity */
-				reg2[1] =
-					(chip->batt_capacity_mah & 0xFF00) >> 8;
+				reg2[1] = (chip->batt_capacity_mah & 0xFF00) >> 8;
 				reg2[0] = (chip->batt_capacity_mah & 0xFF);
 				rc = smb1360_write_bytes(chip,
 					ACTUAL_CAPACITY_REG, reg2, 2);
