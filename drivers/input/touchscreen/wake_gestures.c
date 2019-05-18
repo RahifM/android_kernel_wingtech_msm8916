@@ -85,6 +85,7 @@ static struct input_dev *gesture_dev;
 #ifdef CONFIG_PSENSOR_ONDEMAND_STATE
 int dtw2_psensor_state = LTR559_ON_DEMAND_RESET;
 #endif
+bool in_phone_call = false;
 int s2w_switch = S2W_DEFAULT;
 int s2w_switch_temp; 
 bool s2w_switch_changed = false;
@@ -477,6 +478,9 @@ static void wg_input_event(struct input_handle *handle, unsigned int type,
 		(code==ABS_MT_TRACKING_ID) ? "ID" :
 		"undef"), code, value);
 #endif
+
+	if (in_phone_call)
+		return;
 
 	if (code == ABS_MT_SLOT) {
 		sweep2wake_reset();
