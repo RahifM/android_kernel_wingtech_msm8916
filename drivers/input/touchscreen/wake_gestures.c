@@ -36,6 +36,11 @@
 #include <linux/wakelock.h>
 */
 
+#ifdef CONFIG_PSENSOR_ONDEMAND_STATE
+#include <linux/input/ltr559.h>
+extern int ltr559_ps_ondemand_state (void);
+#endif
+
 /* Tuneables */
 #define WG_DEFAULT		0
 #define DT2W_DEFAULT		0
@@ -77,6 +82,9 @@ static struct input_dev *gesture_dev;
 #endif
 
 /* Resources */
+#ifdef CONFIG_PSENSOR_ONDEMAND_STATE
+int dtw2_psensor_state = LTR559_ON_DEMAND_RESET;
+#endif
 int s2w_switch = S2W_DEFAULT;
 int s2w_switch_temp; 
 bool s2w_switch_changed = false;
@@ -126,6 +134,24 @@ static void report_gesture(int gest)
 
 /* PowerKey work func */
 static void wake_presspwr(struct work_struct * wake_presspwr_work) {
+
+#ifdef CONFIG_PSENSOR_ONDEMAND_STATE
+	if (dtw2_psensor_state == LTR559_ON_DEMAND_COVERED) {
+#if WG_DEBUG
+	    pr_info("%s:%d -Proximity Sensor is covered, dt2w is ignored\n",
+		    __func__, __LINE__);
+#endif
+		dtw2_psensor_state = LTR559_ON_DEMAND_RESET;
+		return;
+	}
+	dtw2_psensor_state = LTR559_ON_DEMAND_RESET;
+#if WG_DEBUG
+	pr_info("%s:%d -Proximity Sensor is not covered, dt2w can wakeup device\n",
+		__func__, __LINE__);
+#endif
+
+#endif
+
 	if (!mutex_trylock(&pwrkeyworklock))
 		return;
 
@@ -148,6 +174,16 @@ static void wake_pwrtrigger(void) {
 	
 	if (pwrtrigger_time[0] - pwrtrigger_time[1] < TRIGGER_TIMEOUT)
 		return;
+
+#ifdef CONFIG_PSENSOR_ONDEMAND_STATE
+	/*
+	 * Prema Chand Alugu (premaca@gmail.com)
+	 * check the proximity sensor on demand.
+	 * The returned state should be checked when the
+	 * dt2w is actually performed.
+	 */
+	dtw2_psensor_state = ltr559_ps_ondemand_state();
+#endif
 
 	schedule_work(&wake_presspwr_work);
 
