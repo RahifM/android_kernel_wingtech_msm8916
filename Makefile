@@ -585,6 +585,9 @@ KBUILD_CFLAGS   += $(call cc-disable-warning,misleading-indentation,)
 # Disable incompatible pointer types warnings
 KBUILD_CFLAGS   += $(call cc-disable-warning,incompatible-pointer-types,)
 
+# hmm, FML
+KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
+
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os
 else
