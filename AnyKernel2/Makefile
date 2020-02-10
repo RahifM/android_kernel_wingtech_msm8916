@@ -1,4 +1,4 @@
-NAME ?= BarongFam
+NAME ?= BarongFam-wt88047
 
 DATE := $(shell date +'%Y%m%d-%H%M')
 
