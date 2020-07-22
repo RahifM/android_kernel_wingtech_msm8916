@@ -33,6 +33,7 @@ ZIP_DIR=$KERNEL_DIR/AnyKernel2
 CONFIG_DIR=$KERNEL_DIR/arch/arm/configs
 TELEGRAM=$HOME/telegram.sh/telegram
 ZIP=$KERNEL_DIR/AnyKernel2/*.zip
+LOG=$KERNEL_DIR/buildlog*.txt
 
 #export
 export CROSS_COMPILE="$HOME/kernel/gcc49/arm/bin/arm-linux-androideabi-"
@@ -50,7 +51,8 @@ echo -e "[2]Regenerate defconfig"
 echo -e "[3]Source cleanup"
 echo -e "[4]Generate flashable zip"
 echo -e "[5]Upload zip"
-echo -e "[6]Quit$nc"
+echo -e "[6]Upload buildlog"
+echo -e "[7]Quit$nc"
 echo -ne "\n$blue(i)Please enter a choice[1-5]:$nc "
 
 read choice
@@ -61,7 +63,7 @@ if [ "$choice" == "1" ]; then
   echo -e "\n$cyan#######################################################################$nc"
   echo -e "$brown(i)Build started at $DATE$nc"
   make $CONFIG $THREAD
-  make $THREAD
+  make $THREAD 2>&1 | tee buildlog.txt
   spin[0]="$blue-"
   spin[1]="\\"
   spin[2]="|"
@@ -127,6 +129,10 @@ if [ "$choice" == "5" ]; then
 fi
 
 if [ "$choice" == "6" ]; then
+  $TELEGRAM -f $LOG
+fi
+
+if [ "$choice" == "7" ]; then
  exit 1
 fi
 done
