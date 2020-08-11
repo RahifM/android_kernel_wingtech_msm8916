@@ -1,4 +1,4 @@
-NAME ?= BarongFam-wt88047
+NAME ?= BarongFam-wt88047_64
 
 DATE := $(shell date +'%Y%m%d-%H%M')
 
@@ -18,5 +18,5 @@ $(ZIP):
 
 clean:
 	@rm -vf "$(NAME)-"*.zip*
-	@rm -vf zImage
+	@rm -vf Image.gz
 	@echo "Done."

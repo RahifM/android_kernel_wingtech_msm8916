@@ -36,7 +36,7 @@ modules.builtin
 *.rej
 *.zip
 *.sha1
-zImage
+Image.gz
 buildlog*.txt
 changelog.txt
 

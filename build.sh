@@ -28,20 +28,20 @@ nc='\033[0m'
 
 #directories
 KERNEL_DIR=$PWD
-KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage
+KERN_IMG=$KERNEL_DIR/arch/arm64/boot/Image.gz
 ZIP_DIR=$KERNEL_DIR/AnyKernel2
-CONFIG_DIR=$KERNEL_DIR/arch/arm/configs
+CONFIG_DIR=$KERNEL_DIR/arch/arm64/configs
 TELEGRAM=$HOME/telegram.sh/telegram
 ZIP=$KERNEL_DIR/AnyKernel2/*.zip
 LOG=$KERNEL_DIR/buildlog*.txt
 
 #export
-export CROSS_COMPILE="$HOME/kernel/gcc49/arm/bin/arm-linux-androideabi-"
-export ARCH=arm
-export SUBARCH=arm
+export CROSS_COMPILE="$HOME/kernel/gcc49/aarch64/bin/aarch64-linux-android-"
+export ARCH=arm64
+export SUBARCH=arm64
 
 #misc
-CONFIG=wt88047_defconfig
+CONFIG=wt88047_64_defconfig
 THREAD="-j$(grep -c ^processor /proc/cpuinfo)"
 
 #main script
@@ -63,7 +63,7 @@ if [ "$choice" == "1" ]; then
   echo -e "\n$cyan#######################################################################$nc"
   echo -e "$brown(i)Build started at $DATE$nc"
   make $CONFIG $THREAD
-  make $THREAD 2>&1 | tee buildlog.txt
+  make $THREAD 2>&1 | tee buildlog-wt88046_64.txt
   spin[0]="$blue-"
   spin[1]="\\"
   spin[2]="|"
