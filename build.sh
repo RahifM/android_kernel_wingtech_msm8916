@@ -28,17 +28,17 @@ nc='\033[0m'
 
 #directories
 KERNEL_DIR=$PWD
-KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage
+KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage-dtb
 ZIP_DIR=$KERNEL_DIR/AnyKernel2
 CONFIG_DIR=$KERNEL_DIR/arch/arm/configs
 
 #export
-export CROSS_COMPILE="$HOME/kernel/gcc49/arm/bin/arm-linux-androideabi-"
+export CROSS_COMPILE="$HOME/roms/arm-eabi/bin/arm-eabi-"
 export ARCH=arm
 export SUBARCH=arm
 
 #misc
-CONFIG=wt88047_defconfig
+CONFIG=lineageos_wt88047_defconfig
 THREAD="-j$(grep -c ^processor /proc/cpuinfo)"
 
 #main script
@@ -58,7 +58,7 @@ if [ "$choice" == "1" ]; then
   echo -e "\n$cyan#######################################################################$nc"
   echo -e "$brown(i)Build started at $DATE$nc"
   make $CONFIG $THREAD
-  make $THREAD
+  make $THREAD zImage-dtb
   spin[0]="$blue-"
   spin[1]="\\"
   spin[2]="|"
