@@ -36,7 +36,7 @@ ZIP=$KERNEL_DIR/AnyKernel2/*.zip
 LOG=$KERNEL_DIR/buildlog*.txt
 
 #export
-export CROSS_COMPILE="$HOME/android/kernels/toolchain/arm-4.8/bin/arm-eabi-"
+export CROSS_COMPILE="$HOME/android/r/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-"
 #export CROSS_COMPILE="$HOME/kernel/gcc49/arm/bin/arm-linux-androideabi-"
 export ARCH=arm
 export SUBARCH=arm
