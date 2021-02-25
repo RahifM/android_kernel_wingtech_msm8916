@@ -28,7 +28,7 @@ nc='\033[0m'
 
 #directories
 KERNEL_DIR=$PWD
-KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage
+KERN_IMG=$KERNEL_DIR/arch/arm/boot/zImage-dtb
 ZIP_DIR=$KERNEL_DIR/AnyKernel2
 CONFIG_DIR=$KERNEL_DIR/arch/arm/configs
 TELEGRAM=$HOME/telegram.sh/telegram
@@ -64,7 +64,7 @@ if [ "$choice" == "1" ]; then
   echo -e "\n$cyan#######################################################################$nc"
   echo -e "$brown(i)Build started at $DATE$nc"
   make $CONFIG $THREAD
-  make $THREAD 2>&1 | tee buildlog.txt
+  make $THREAD zImage-dtb 2>&1 | tee buildlog.txt
   spin[0]="$blue-"
   spin[1]="\\"
   spin[2]="|"
