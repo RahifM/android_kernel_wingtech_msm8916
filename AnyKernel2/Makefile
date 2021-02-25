@@ -18,5 +18,5 @@ $(ZIP):
 
 clean:
 	@rm -vf "$(NAME)-"*.zip*
-	@rm -vf zImage
+	@rm -vf zImage*
 	@echo "Done."
