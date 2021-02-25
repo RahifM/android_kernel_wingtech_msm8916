@@ -463,45 +463,27 @@ struct rtnl_link_stats64 *mvneta_get_stats64(struct net_device *dev,
 	unsigned int start;
 	int cpu;
 
-<<<<<<< HEAD
 	for_each_possible_cpu(cpu) {
 		struct mvneta_pcpu_stats *cpu_stats;
 		u64 rx_packets;
 		u64 rx_bytes;
 		u64 tx_packets;
 		u64 tx_bytes;
-=======
-	memset(stats, 0, sizeof(struct rtnl_link_stats64));
-
-	do {
-		start = u64_stats_fetch_begin_irq(&pp->rx_stats.syncp);
-		stats->rx_packets = pp->rx_stats.packets;
-		stats->rx_bytes	= pp->rx_stats.bytes;
-	} while (u64_stats_fetch_retry_irq(&pp->rx_stats.syncp, start));
->>>>>>> b12077f38cb2... net: Replace u64_stats_fetch_begin_bh to u64_stats_fetch_begin_irq
 
 		cpu_stats = per_cpu_ptr(pp->stats, cpu);
 		do {
-			start = u64_stats_fetch_begin_bh(&cpu_stats->syncp);
+			start = u64_stats_fetch_begin_irq(&cpu_stats->syncp);
 			rx_packets = cpu_stats->rx_packets;
 			rx_bytes   = cpu_stats->rx_bytes;
 			tx_packets = cpu_stats->tx_packets;
 			tx_bytes   = cpu_stats->tx_bytes;
-		} while (u64_stats_fetch_retry_bh(&cpu_stats->syncp, start));
+		} while (u64_stats_fetch_retry_irq(&cpu_stats->syncp, start));
 
-<<<<<<< HEAD
 		stats->rx_packets += rx_packets;
 		stats->rx_bytes   += rx_bytes;
 		stats->tx_packets += tx_packets;
 		stats->tx_bytes   += tx_bytes;
 	}
-=======
-	do {
-		start = u64_stats_fetch_begin_irq(&pp->tx_stats.syncp);
-		stats->tx_packets = pp->tx_stats.packets;
-		stats->tx_bytes	= pp->tx_stats.bytes;
-	} while (u64_stats_fetch_retry_bh(&pp->tx_stats.syncp, start));
->>>>>>> b12077f38cb2... net: Replace u64_stats_fetch_begin_bh to u64_stats_fetch_begin_irq
 
 	stats->rx_errors	= dev->stats.rx_errors;
 	stats->rx_dropped	= dev->stats.rx_dropped;
