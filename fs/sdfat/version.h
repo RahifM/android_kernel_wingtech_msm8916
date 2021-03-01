@@ -22,4 +22,8 @@
 /*  PURPOSE : sdFAT File Manager                                        */
 /*                                                                      */
 /************************************************************************/
+<<<<<<< HEAD
 #define SDFAT_VERSION	"2.1.8-lineage"
+=======
+#define SDFAT_VERSION	"2.0.6"
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e

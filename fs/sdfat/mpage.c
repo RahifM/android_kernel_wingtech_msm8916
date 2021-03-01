@@ -78,6 +78,7 @@ static void __mpage_write_end_io(struct bio *bio, int err);
 /*************************************************************************
  * FUNCTIONS WHICH HAS KERNEL VERSION DEPENDENCY
  *************************************************************************/
+<<<<<<< HEAD
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 14, 0)
        /* EMPTY */
 #else /* LINUX_VERSION_CODE < KERNEL_VERSION(4, 14, 0) */
@@ -99,6 +100,8 @@ static inline void __sdfat_clean_bdev_aliases(struct block_device *bdev, sector_
 }
 #endif
 
+=======
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 8, 0)
 static inline void __sdfat_submit_bio_write2(int flags, struct bio *bio)
 {
@@ -112,6 +115,23 @@ static inline void __sdfat_submit_bio_write2(int flags, struct bio *bio)
 }
 #endif
 
+<<<<<<< HEAD
+=======
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 3, 0)
+static void  mpage_write_end_io(struct bio *bio)
+{
+	__mpage_write_end_io(bio, bio->bi_error);
+}
+#else /* LINUX_VERSION_CODE < KERNEL_VERSION(4,3,0) */
+static void mpage_write_end_io(struct bio *bio, int err)
+{
+	if (test_bit(BIO_UPTODATE, &bio->bi_flags))
+		err = 0;
+	__mpage_write_end_io(bio, err);
+}
+#endif
+
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 1, 0)
 static inline int bio_get_nr_vecs(struct block_device *bdev)
 {
@@ -163,6 +183,7 @@ static inline void __sdfat_set_bio_size(struct bio *bio, unsigned int size)
 }
 #endif
 
+<<<<<<< HEAD
 /*************************************************************************
  * MORE FUNCTIONS WHICH HAS KERNEL VERSION DEPENDENCY
  *************************************************************************/
@@ -185,6 +206,8 @@ static void mpage_write_end_io(struct bio *bio, int err)
 }
 #endif
 
+=======
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 /* __check_dfr_on() and __dfr_writepage_end_io() functions
  * are copied from sdfat.c
  * Each function should be same perfectly
@@ -306,7 +329,11 @@ mpage_alloc(struct block_device *bdev,
 	}
 
 	if (bio) {
+<<<<<<< HEAD
 		bio_set_dev(bio, bdev);
+=======
+		bio->bi_bdev = bdev;
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 		__sdfat_set_bio_sector(bio, first_sector);
 	}
 	return bio;
@@ -390,7 +417,11 @@ static int sdfat_mpage_writepage(struct page *page,
 
 				if (buffer_new(bh)) {
 					clear_buffer_new(bh);
+<<<<<<< HEAD
 					__sdfat_clean_bdev_aliases(bh->b_bdev, bh->b_blocknr);
+=======
+					unmap_underlying_metadata(bh->b_bdev, bh->b_blocknr);
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 				}
 			}
 
@@ -440,7 +471,12 @@ static int sdfat_mpage_writepage(struct page *page,
 			goto confused;
 
 		if (buffer_new(&map_bh))
+<<<<<<< HEAD
 			__sdfat_clean_bdev_aliases(map_bh.b_bdev, map_bh.b_blocknr);
+=======
+			unmap_underlying_metadata(map_bh.b_bdev,
+					map_bh.b_blocknr);
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 		if (buffer_boundary(&map_bh)) {
 			boundary_block = map_bh.b_blocknr;
 			boundary_bdev = map_bh.b_bdev;

@@ -1,5 +1,9 @@
 config SDFAT_FS
+<<<<<<< HEAD
 	tristate "sdFAT filesystem support"
+=======
+	tristate "sdFAT fs support"
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 	default y
 	select NLS
 	select NLS_UTF8
@@ -92,31 +96,55 @@ config SDFAT_SUPPORT_STLOG
 	depends on SDFAT_FS && PROC_STLOG
 
 config SDFAT_DEBUG
+<<<<<<< HEAD
 	bool "enable debug features"
+=======
+	bool "Enable debug features"
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 	depends on SDFAT_FS
 	default y
 
 config SDFAT_DBG_IOCTL
+<<<<<<< HEAD
 	bool "enable debug-ioctl features"
+=======
+	bool "Enable debug-ioctl features"
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 	depends on SDFAT_FS && SDFAT_DEBUG
 	default n
 
 config SDFAT_DBG_MSG
+<<<<<<< HEAD
 	bool "enable debug messages"
+=======
+	bool "Enable debug messages"
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 	depends on SDFAT_FS && SDFAT_DEBUG
 	default y
 
 config SDFAT_DBG_BUGON
+<<<<<<< HEAD
 	bool "enable strict BUG_ON() for debugging"
+=======
+	bool "Enable strict BUG_ON() for debugging"
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 	depends on SDFAT_FS && SDFAT_DEBUG
 	default n
 
 config SDFAT_DBG_WARNON
+<<<<<<< HEAD
 	bool "enable strict WARN_ON() for debugging"
+=======
+	bool "Enable strict WARN_ON() for debugging"
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 	depends on SDFAT_FS && SDFAT_DEBUG
 	default n
 
 config SDFAT_STATISTICS
+<<<<<<< HEAD
 	bool "enable statistics for bigdata"
+=======
+	bool "Enable statistics for bigdata"
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 	depends on SDFAT_FS
 	default y

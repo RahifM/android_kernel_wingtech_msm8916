@@ -43,11 +43,15 @@
 #include "version.h"
 
 #ifdef CONFIG_SDFAT_SUPPORT_STLOG
+<<<<<<< HEAD
 #ifdef CONFIG_PROC_FSLOG
 #include <linux/fslog.h>
 #else
 #include <linux/stlog.h>
 #endif
+=======
+#include <linux/stlog.h>
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 #else
 #define ST_LOG(fmt, ...)
 #endif
@@ -75,7 +79,11 @@ void __sdfat_fs_error(struct super_block *sb, int report, const char *fmt, ...)
 		pr_err("[SDFAT](%s[%d:%d]):ERR: %pV\n",
 			sb->s_id, MAJOR(bd_dev), MINOR(bd_dev), &vaf);
 #ifdef CONFIG_SDFAT_SUPPORT_STLOG
+<<<<<<< HEAD
 		if (opts->errors == SDFAT_ERRORS_RO && !SDFAT_IS_SB_RDONLY(sb)) {
+=======
+		if (opts->errors == SDFAT_ERRORS_RO && !(sb->s_flags & MS_RDONLY)) {
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 			ST_LOG("[SDFAT](%s[%d:%d]):ERR: %pV\n",
 				sb->s_id, MAJOR(bd_dev), MINOR(bd_dev), &vaf);
 		}
@@ -86,6 +94,7 @@ void __sdfat_fs_error(struct super_block *sb, int report, const char *fmt, ...)
 	if (opts->errors == SDFAT_ERRORS_PANIC) {
 		panic("[SDFAT](%s[%d:%d]): fs panic from previous error\n",
 			sb->s_id, MAJOR(bd_dev), MINOR(bd_dev));
+<<<<<<< HEAD
 	} else if (opts->errors == SDFAT_ERRORS_RO && !SDFAT_IS_SB_RDONLY(sb)) {
 #if LINUX_VERSION_CODE < KERNEL_VERSION(4, 14, 0)
 		sb->s_flags |= MS_RDONLY;
@@ -93,6 +102,10 @@ void __sdfat_fs_error(struct super_block *sb, int report, const char *fmt, ...)
 		sb->s_flags |= SB_RDONLY;
 #endif
 		sdfat_statistics_set_mnt_ro();
+=======
+	} else if (opts->errors == SDFAT_ERRORS_RO && !(sb->s_flags & MS_RDONLY)) {
+		sb->s_flags |= MS_RDONLY;
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 		pr_err("[SDFAT](%s[%d:%d]): Filesystem has been set "
 			"read-only\n", sb->s_id, MAJOR(bd_dev), MINOR(bd_dev));
 #ifdef CONFIG_SDFAT_SUPPORT_STLOG
@@ -175,7 +188,11 @@ static time_t accum_days_in_year[] = {
 };
 
 /* Convert a FAT time/date pair to a UNIX date (seconds since 1 1 70). */
+<<<<<<< HEAD
 void sdfat_time_fat2unix(struct sdfat_sb_info *sbi, struct timespec_compat *ts,
+=======
+void sdfat_time_fat2unix(struct sdfat_sb_info *sbi, struct timespec *ts,
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 		DATE_TIME_T *tp)
 {
 	time_t year = tp->Year;
@@ -198,7 +215,11 @@ void sdfat_time_fat2unix(struct sdfat_sb_info *sbi, struct timespec_compat *ts,
 }
 
 /* Convert linear UNIX date to a FAT time/date pair. */
+<<<<<<< HEAD
 void sdfat_time_unix2fat(struct sdfat_sb_info *sbi, struct timespec_compat *ts,
+=======
+void sdfat_time_unix2fat(struct sdfat_sb_info *sbi, struct timespec *ts,
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 		DATE_TIME_T *tp)
 {
 	time_t second = ts->tv_sec;
@@ -262,7 +283,11 @@ void sdfat_time_unix2fat(struct sdfat_sb_info *sbi, struct timespec_compat *ts,
 
 TIMESTAMP_T *tm_now(struct sdfat_sb_info *sbi, TIMESTAMP_T *tp)
 {
+<<<<<<< HEAD
 	struct timespec_compat ts = CURRENT_TIME_SEC;
+=======
+	struct timespec ts = CURRENT_TIME_SEC;
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 	DATE_TIME_T dt;
 
 	sdfat_time_unix2fat(sbi, &ts, &dt);

@@ -70,9 +70,12 @@ typedef struct {
 s32 fscore_init(void);
 s32 fscore_shutdown(void);
 
+<<<<<<< HEAD
 /* bdev management */
 s32 fscore_check_bdi_valid(struct super_block *sb);
 
+=======
+>>>>>>> b7e20f0c7f092fd2265290960aec6052a71d955e
 /* chain management */
 s32 chain_cont_cluster(struct super_block *sb, u32 chain, u32 len);
 
